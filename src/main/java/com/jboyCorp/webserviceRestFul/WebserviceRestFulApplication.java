@@ -8,18 +8,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.jboyCorp.webserviceRestFul.domain.Category;
+import com.jboyCorp.webserviceRestFul.domain.City;
 import com.jboyCorp.webserviceRestFul.domain.Product;
+import com.jboyCorp.webserviceRestFul.domain.State;
 import com.jboyCorp.webserviceRestFul.repositories.CategoryRepository;
+import com.jboyCorp.webserviceRestFul.repositories.CityRepository;
 import com.jboyCorp.webserviceRestFul.repositories.ProductRepository;
+import com.jboyCorp.webserviceRestFul.repositories.StateRepository;
 
 @SpringBootApplication
 public class WebserviceRestFulApplication implements CommandLineRunner {
-	
+
 	@Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProductRepository productRepository;
-	
+	@Autowired
+	private StateRepository stateRepository;
+	@Autowired
+	private CityRepository cityRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebserviceRestFulApplication.class, args);
@@ -61,6 +68,24 @@ public class WebserviceRestFulApplication implements CommandLineRunner {
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
+		
+		State st1 = new State(null, "Sao Paulo", "SP");
+		State st2 = new State(null, "Rio de Janeiro", "RJ");
+		State st3 = new State(null, "Minas Gerais", "MG");
+		
+		City cit1 = new City(null, "Santos", st1);
+		City cit2 = new City(null, "Campinas", st1);
+		City cit3 = new City(null, "Petropolis", st2);
+		City cit4 = new City(null, "Belo Horizonte", st3);
+		City cit5 = new City(null, "Angra dos Reis", st2);
+		City cit6 = new City(null, "Poços de Calda", st3);
+		
+		st1.getCities().addAll(Arrays.asList(cit1, cit2));
+		st2.getCities().addAll(Arrays.asList(cit3, cit5));
+		st3.getCities().addAll(Arrays.asList(cit4, cit6));
+		
+		stateRepository.saveAll(Arrays.asList(st1, st2, st3));
+		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3, cit4, cit5, cit6));
 		
 	}
 
