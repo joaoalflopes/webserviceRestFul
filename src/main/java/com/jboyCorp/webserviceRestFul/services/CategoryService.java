@@ -25,7 +25,7 @@ public class CategoryService {
 	public Category find(Integer id) {
 		Optional<Category> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
-				"Object not found! Id: " + id + ", Tipo: " + Category.class.getName()));
+				"Object not found! Id: " + id + ", Type" + ": " + Category.class.getName()));
 	}
 	
 	public Category insert(Category obj) {
