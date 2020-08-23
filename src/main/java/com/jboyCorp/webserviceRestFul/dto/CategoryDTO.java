@@ -2,7 +2,6 @@ package com.jboyCorp.webserviceRestFul.dto;
 
 import java.io.Serializable;
 
-
 import com.jboyCorp.webserviceRestFul.domain.Category;
 
 public class CategoryDTO implements Serializable {

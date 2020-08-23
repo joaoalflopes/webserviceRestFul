@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.jboyCorp.webserviceRestFul.domain.Address;
 import com.jboyCorp.webserviceRestFul.domain.Category;
 import com.jboyCorp.webserviceRestFul.domain.City;
+import com.jboyCorp.webserviceRestFul.domain.Client;
 import com.jboyCorp.webserviceRestFul.domain.Product;
 import com.jboyCorp.webserviceRestFul.domain.State;
+import com.jboyCorp.webserviceRestFul.domain.enums.TypeClient;
+import com.jboyCorp.webserviceRestFul.repositories.AddressRepository;
 import com.jboyCorp.webserviceRestFul.repositories.CategoryRepository;
 import com.jboyCorp.webserviceRestFul.repositories.CityRepository;
+import com.jboyCorp.webserviceRestFul.repositories.ClientRepository;
 import com.jboyCorp.webserviceRestFul.repositories.ProductRepository;
 import com.jboyCorp.webserviceRestFul.repositories.StateRepository;
 
@@ -27,6 +32,11 @@ public class WebserviceRestFulApplication implements CommandLineRunner {
 	private StateRepository stateRepository;
 	@Autowired
 	private CityRepository cityRepository;
+	@Autowired
+	private ClientRepository clientRepository;
+	@Autowired
+	private AddressRepository addressRepository;
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebserviceRestFulApplication.class, args);
@@ -79,14 +89,37 @@ public class WebserviceRestFulApplication implements CommandLineRunner {
 		City cit4 = new City(null, "Belo Horizonte", st3);
 		City cit5 = new City(null, "Angra dos Reis", st2);
 		City cit6 = new City(null, "Poços de Calda", st3);
+		City cit7 = new City(null, "São Vicente", st1);
 		
 		st1.getCities().addAll(Arrays.asList(cit1, cit2));
 		st2.getCities().addAll(Arrays.asList(cit3, cit5));
 		st3.getCities().addAll(Arrays.asList(cit4, cit6));
 		
 		stateRepository.saveAll(Arrays.asList(st1, st2, st3));
-		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3, cit4, cit5, cit6));
+		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3, cit4, cit5, cit6, cit7));
 		
+		Client cli1 = new Client(null, "Maria Helena P.Lopes", "mariahelen@gmail.com", "07210559488", TypeClient.PESSOAFISICA);
+		Client cli2 = new Client(null, "Joao Alfredo P.Lopes", "joaoalfredo_lopes@yahoo.com.br", "08769488835", TypeClient.PESSOAFISICA);
+		Client cli3 = new Client(null, "Simoes & Barreira SC Ltda", "simoesbarra@gmail.com", "05755751000131", TypeClient.PESSOAJURIDICA);
+		
+		cli1.getPhones().addAll(Arrays.asList("13991138797", "1332281406"));
+		cli2.getPhones().addAll(Arrays.asList("13991236336", "13981328480"));
+		cli3.getPhones().addAll(Arrays.asList("1332281809", "1332281810"));
+		
+		Address addrs1 = new Address(null, "Rua Anadir Dias de Carvalho", "586", "Casa", "Joquei Clube", "11450-515", cli1, cit7);
+		Address addrs2 = new Address(null, "Rua Governador Pedro de Toledo", "56", "Apto 95", "Boqueirao", "11045-550", cli2, cit1);
+		Address addrs3 = new Address(null, "Rua Anadir Dias de Carvalho", "586", "-", "Joquei Clube", "11450-515", cli2, cit7);
+		Address addrs4 = new Address(null, "Avenida Dona Ana Costa", "413", "Conj.45", "Gonzaga", "11230-101", cli3, cit1);
+		
+		
+		cli1.getAdresses().addAll(Arrays.asList(addrs1));
+		cli2.getAdresses().addAll(Arrays.asList(addrs2, addrs3));
+		cli3.getAdresses().addAll(Arrays.asList(addrs4));
+		
+		
+		clientRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
+		addressRepository.saveAll(Arrays.asList(addrs1, addrs2, addrs3, addrs4));
+
 	}
 
 }
